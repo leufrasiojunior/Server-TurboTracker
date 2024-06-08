@@ -1,0 +1,40 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model settings {
+  id        Int      @id @default(autoincrement())
+  group     String
+  name      String
+  payload   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model results {
+  id         Int      @id @default(autoincrement())
+  ping       Float?
+  download   Float?
+  upload     Float?
+  packetloss Float?
+  comments   String?
+  data       String?  @db.LongText
+  status     String?
+  scheduled  Float?
+  created_at DateTime @default(now())
+  updated_at DateTime
+}
