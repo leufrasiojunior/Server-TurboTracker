@@ -10,7 +10,7 @@ const scheduleSpeedtest = (cronConfig) => {
     stopCurrentTask();
 
     currentTask = cron.schedule(cronConfig, () => {
-        runSpeedtest();
+        runSpeedtest(true);
     });
 };
 

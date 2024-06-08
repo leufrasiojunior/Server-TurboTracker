@@ -19,10 +19,9 @@ const executeCommand = (command) => {
     });
 };
 
-const runSpeedtest = async () => {
+const runSpeedtest = async (isScheduled) => {
     let resultRecord;
     try {
-        // Create an initial result record with status STARTED
         resultRecord = await prisma.results.create({
             data: {
                 ping: null ,
@@ -32,16 +31,12 @@ const runSpeedtest = async () => {
                 comments: null ,
                 data: null ,
                 status: 'started',
-                scheduled: null, 
+                scheduled: isScheduled, 
                 updated_at: new Date().toISOString(),
             },
         });
-
-        // Execute the speedtest command
         const stdout = await executeCommand('speedtest --f=json-pretty');
         const result = JSON.parse(stdout);
-
-        // Update the result record with the actual data and status SUCCESS
         await prisma.results.update({
             where: { id: resultRecord.id },
             data: {
@@ -51,13 +46,12 @@ const runSpeedtest = async () => {
                 packetloss: result.packetLoss || 0,
                 comments: '',
                 data: JSON.stringify(result),
-                status: 'success',
-                scheduled: 0,
+                status: 'completed',
+                scheduled: isScheduled,
                 updated_at: new Date().toISOString(),
             },
         });
     } catch (error) {
-        // If there's an error, update the result record with status FAILED
         if (resultRecord) {
             await prisma.results.update({
                 where: { id: resultRecord.id },

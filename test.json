@@ -1,0 +1,55 @@
+{
+    "type": "result",
+    "timestamp": "2024-02-19T21:13:08Z",
+    "ping": {
+        "jitter": 0.222,
+        "latency": 3.85,
+        "low": 3.723,
+        "high": 4.209
+    },
+    "download": {
+        "bandwidth": 75469032,
+        "bytes": 1049523840,
+        "elapsed": 15001,
+        "latency": {
+            "iqm": 11.582,
+            "low": 2.697,
+            "high": 233.241,
+            "jitter": 7.911
+        }
+    },
+    "upload": {
+        "bandwidth": 41977942,
+        "bytes": 636261847,
+        "elapsed": 14994,
+        "latency": {
+            "iqm": 6.154,
+            "low": 2.822,
+            "high": 225.445,
+            "jitter": 8.433
+        }
+    },
+    "packetLoss": 0,
+    "isp": "Vivo",
+    "interface": {
+        "internalIp": "172.20.0.3",
+        "name": "eth0",
+        "macAddr": "02:42:AC:14:00:03",
+        "isVpn": false,
+        "externalIp": "177.9.189.67"
+    },
+    "server": {
+        "id": 56538,
+        "host": "speedtest-barueri.azza.net.br",
+        "port": 8080,
+        "name": "Azza Telecom",
+        "location": "Barueri",
+        "country": "Brazil",
+        "ip": "187.45.58.234"
+    },
+    "result": {
+        "id": "0988f5ae-e1b0-4ca8-a53a-86adce1831e0",
+        "url": "https:\/\/www.speedtest.net\/result\/c\/0988f5ae-e1b0-4ca8-a53a-86adce1831e0",
+        "persisted": true
+    }
+}

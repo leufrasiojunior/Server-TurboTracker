@@ -34,7 +34,7 @@ model results {
   comments   String?
   data       String?  @db.LongText
   status     String?
-  scheduled  Float?
+  scheduled  Boolean?
   created_at DateTime @default(now())
   updated_at DateTime
 }

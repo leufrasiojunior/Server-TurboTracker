@@ -12,7 +12,7 @@ loadConfig().then(config => {
 });
 router.post('/runspeedtest', async (req, res) => {
     setTimeout(() => {
-        runSpeedtest();
+        runSpeedtest(false);
     }, 10000);
     res.json({ message: 'Speedtest Scheduled'});
 })
