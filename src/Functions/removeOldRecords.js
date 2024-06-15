@@ -57,7 +57,7 @@ async function removeOldRecords() {
       return;
     }
 
-    const result = await prisma.resultss.deleteMany({
+    const result = await prisma.results.deleteMany({
       where: {
         created_at: {
           lt: tenDaysAgo,

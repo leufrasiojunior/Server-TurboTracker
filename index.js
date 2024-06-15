@@ -4,6 +4,9 @@ const login = require('./src/routes/login');
 const register = require('./src/routes/register');
 const settings = require('./src/routes/settings');
 const schedule = require('./src/routes/schedule');
+const listResults = require('./src/routes/listResults');
+const averages = require('./src/routes/averagesRoute');
+const listDatas = require('./src/routes/listDatas');
 const cron = require('node-cron');
 const {removeOldRecords} = require('./src/Functions/removeOldRecords')
 const app = express();
@@ -17,8 +20,11 @@ app.use('/api/v1', login)
 app.use('/api/v1', register)
 app.use('/api/v1', settings)
 app.use('/api/v1', schedule)
-
-cron.schedule('0 59 23 * * *', () => {
+app.use('/api/v1', listResults)
+app.use('/api/v1', averages)
+app.use('/api/v1', listDatas)
+// 0 59 23 * * *
+cron.schedule(' 0 59 23 * * *', () => {
     removeOldRecords();
   });
 
