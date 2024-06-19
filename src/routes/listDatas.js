@@ -41,8 +41,6 @@ router.get('/data', async (req, res) => {
                 id: 'desc'
             }
         }) 
-        console.log(results)
-
         const responseData = results.map(row => {
             const jsonData = JSON.parse(row.data);
             if (jsonData) {

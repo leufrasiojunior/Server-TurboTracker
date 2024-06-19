@@ -7,6 +7,8 @@ const schedule = require('./src/routes/schedule');
 const listResults = require('./src/routes/listResults');
 const averages = require('./src/routes/averagesRoute');
 const listDatas = require('./src/routes/listDatas');
+const getservers = require('./src/routes/dashRoute');
+const packetLoss = require('./src/routes/dashRoute');
 const cron = require('node-cron');
 const {removeOldRecords} = require('./src/Functions/removeOldRecords')
 const app = express();
@@ -23,6 +25,8 @@ app.use('/api/v1', schedule)
 app.use('/api/v1', listResults)
 app.use('/api/v1', averages)
 app.use('/api/v1', listDatas)
+app.use('/api/v1', getservers)
+app.use('/api/v1', packetLoss)
 // 0 59 23 * * *
 cron.schedule(' 0 59 23 * * *', () => {
     removeOldRecords();
