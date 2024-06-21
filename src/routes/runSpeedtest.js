@@ -22,6 +22,20 @@ const executeCommand = (command) => {
 const runSpeedtest = async (isScheduled) => {
     let resultRecord;
     try {
+        const hostRecord = await prisma.settings.findMany(
+            {
+                where: {
+                    name: 'host'
+                }
+            }
+        );
+        
+        let command = 'speedtest --accept-license --accept-gdp --f=json-pretty ';
+        if (hostRecord && hostRecord[0].payload) {
+            command += ` --server-id=${hostRecord[0].payload}`;
+        }
+
+
         resultRecord = await prisma.results.create({
             data: {
                 ping: null ,
@@ -35,7 +49,7 @@ const runSpeedtest = async (isScheduled) => {
                 updated_at: new Date().toISOString(),
             },
         });
-        const stdout = await executeCommand('speedtest --accept-license --accept-gdp --f=json-pretty');
+        const stdout = await executeCommand(command);
         const result = JSON.parse(stdout);
         await prisma.results.update({
             where: { id: resultRecord.id },
@@ -56,7 +70,7 @@ const runSpeedtest = async (isScheduled) => {
             await prisma.results.update({
                 where: { id: resultRecord.id },
                 data: {
-                    status: 'FAILED',
+                    status: 'failed',
                     updated_at: new Date().toISOString(),
                     comments: `Error: ${error}`
                 },
