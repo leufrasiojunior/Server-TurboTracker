@@ -7,19 +7,17 @@ router.get('/getservers', async (req, res) => {
   try {
     const { startdate, enddate } = req.query;
 
-
     let dateFilter = {};
     if (startdate) {
       const startDateTime = new Date(startdate);
       startDateTime.setHours(0, 0, 0, 0);
-      dateFilter.gte = startDateTime;
+      dateFilter.gte = startDateTime.toISOString(); 
     }
     if (enddate) {
       const endDateTime = new Date(enddate);
       endDateTime.setHours(23, 59, 59, 999);
-      dateFilter.lte = endDateTime;
+      dateFilter.lte = endDateTime.toISOString();
     }
-
 
     const whereClause = {};
     if (dateFilter.gte || dateFilter.lte) {
@@ -54,24 +52,43 @@ router.get('/getservers', async (req, res) => {
         return acc;
       }, {});
 
-    res.json({totalResults: totalResults, serverCounts});
+    res.json({totalResults: totalResults, serverCounts, whereClause});
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch data' });
   }
 });
 
 router.get('/packetLoss', async (req, res) => {
+  const { startdate, enddate } = req.query;
+
+  let dateFilter = {};
+  if (startdate) {
+    const startDateTime = new Date(startdate);
+    startDateTime.setHours(0, 0, 0, 0);
+    dateFilter.gte = startDateTime.toISOString(); 
+  }
+  if (enddate) {
+    const endDateTime = new Date(enddate);
+    endDateTime.setHours(23, 59, 59, 999);
+    dateFilter.lte = endDateTime.toISOString();
+  }
+
+  const whereClause = {
+    packetloss: {
+    gt: 0
+  },
+};
+  if (dateFilter.gte || dateFilter.lte) {
+    whereClause.created_at = dateFilter;
+  }
   try {
     // Buscar todos os resultados com packetloss maior que 0
     const results = await prisma.results.findMany({
+      // where: whereClause,
       orderBy: {
         id: 'desc',
       },
-      where: {
-        packetloss: {
-          gt: 0
-        },
-      }
+      where: whereClause
     });
 
     // Processar os resultados
@@ -83,7 +100,7 @@ router.get('/packetLoss', async (req, res) => {
       if (!acc[host]) {
         acc[host] = {
           host: host,
-          id: id,
+          server_id: id,
           total: 0,
           packetloss: []
         };

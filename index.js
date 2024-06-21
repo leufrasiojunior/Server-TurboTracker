@@ -9,6 +9,7 @@ const averages = require('./src/routes/averagesRoute');
 const listDatas = require('./src/routes/listDatas');
 const getservers = require('./src/routes/dashRoute');
 const packetLoss = require('./src/routes/dashRoute');
+const getHosts = require('./src/routes/getHosts');
 
 const cron = require('node-cron');
 const {removeOldRecords} = require('./src/Functions/removeOldRecords')
@@ -28,6 +29,7 @@ app.use('/api/v1', averages)
 app.use('/api/v1', listDatas)
 app.use('/api/v1', getservers)
 app.use('/api/v1', packetLoss)
+app.use('/api/v1', getHosts)
 
 // 0 59 23 * * *
 cron.schedule(' 0 59 23 * * *', () => {

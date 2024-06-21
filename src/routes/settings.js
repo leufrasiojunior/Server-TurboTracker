@@ -34,13 +34,16 @@ const saveOrUpdateSetting = async (name, value) => {
 };
 
 router.post('/settings', validateCron, async (req, res) => {
-    const { timezone, pruneData = null, scheduleTest = null } = req.body;
+    const { timezone, pruneData = null, scheduleTest = null, host = null } = req.body;
 
     try {
         await saveOrUpdateSetting("timezone", timezone);
 
         if (pruneData !== null) {
             await saveOrUpdateSetting("pruneData", pruneData);
+        }
+        if (pruneData !== null) {
+            await saveOrUpdateSetting("host", host);
         }
 
         if (scheduleTest !== null) {

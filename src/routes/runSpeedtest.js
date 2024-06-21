@@ -35,7 +35,7 @@ const runSpeedtest = async (isScheduled) => {
                 updated_at: new Date().toISOString(),
             },
         });
-        const stdout = await executeCommand('speedtest --f=json-pretty');
+        const stdout = await executeCommand('speedtest --accept-license --accept-gdp --f=json-pretty');
         const result = JSON.parse(stdout);
         await prisma.results.update({
             where: { id: resultRecord.id },
