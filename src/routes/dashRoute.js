@@ -33,10 +33,9 @@ router.get('/getservers', async (req, res) => {
         created_at: 'desc',
       },
     });
-
     const jsonData = results.map(result => JSON.parse(result.data));
     const totalResults = jsonData.length;
-
+    
     const hostCounts = jsonData.reduce((acc, item) => {
       const host = item.server.host;
       if (host) {
@@ -44,6 +43,7 @@ router.get('/getservers', async (req, res) => {
       }
       return acc;
     }, {});
+    console.log(hostCounts)
 
     const serverCounts = Object.entries(hostCounts)
       .sort(([, a], [, b]) => b - a)

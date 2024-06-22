@@ -21,6 +21,7 @@ const executeCommand = (command) => {
 
 const runSpeedtest = async (isScheduled) => {
     let resultRecord;
+    console.log(isScheduled);
     try {
         const hostRecord = await prisma.settings.findMany(
             {
